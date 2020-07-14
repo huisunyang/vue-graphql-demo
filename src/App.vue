@@ -7,7 +7,32 @@
     <router-view/>
   </div>
 </template>
-
+<script>
+import gql from 'graphql-tag'
+export default {
+  created () {
+    const getECards = gql`query ($page:Int,$pageSize:Int) {
+        usedDetailStatistics (page:$page,pageSize:$pageSize) {
+          data {
+            orderId
+          }
+          totalPages
+          totalElements
+        }
+        test
+      }`
+    this.$apollo.query({
+      query: getECards,
+      variables: {
+        page: 0,
+        pageSize: 20
+      }
+    }).then(res => {
+      console.log('1233456', res)
+    })
+  }
+}
+</script>
 <style lang="less">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
